@@ -61,6 +61,20 @@ class MyTestCase(unittest.TestCase):
             print("Playing output...")
             play_audio("output.wav")
 
+    def test_full_audio_pipeline_with_custom_wake_word_with_pi(self):
+        custom_keyword_path = "../Hey-Sert_en_raspberry-pi_v3_0_0.ppn"
+        porcupine = pvporcupine.create(
+            access_key=PORCUPINE_ACCESS_KEY,
+            keywords=["Hey Sert"],
+            keyword_paths=[custom_keyword_path]
+        )
+        wake_word_detected = listen_for_wake_word(porcupine)
+        if wake_word_detected:
+            record_audio_dynamic(max_duration=20, silence_duration=1.5, fs=44100, threshold=0.01)
+            listen_and_answer(client)
+            print("Playing output...")
+            play_audio("output.wav")
+
 
 if __name__ == '__main__':
     # unittest.main()
