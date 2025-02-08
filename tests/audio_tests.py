@@ -62,7 +62,7 @@ class MyTestCase(unittest.TestCase):
             play_audio("output.wav")
 
     def test_full_audio_pipeline_with_custom_wake_word_with_pi(self):
-        custom_keyword_path = "../Hey-Sert_en_raspberry-pi_v3_0_0.ppn"
+        custom_keyword_path = "./Hey-Sert_en_raspberry-pi_v3_0_0.ppn"
         porcupine = pvporcupine.create(
             access_key=PORCUPINE_ACCESS_KEY,
             keywords=["Hey Sert"],
