@@ -61,3 +61,29 @@ Then save the file and exit the editor.
 ```bash
 python3 -m unittest tests.audio_tests.MyTestCase.test_full_audio_pipeline_with_custom_wake_word_with_pi
 ```
+
+## Deploying as a Daemon on Raspberry Pi
+1. Deploy service using the setup script
+- Make sure the setup_service.sh file is executable
+```bash
+chmod +x deploy/setup_service.sh
+```
+- Run the setup script
+
+```bash
+./deploy/setup_service.sh
+```
+The setup script will:
+
+	• Enable the service to start on boot for the current user.
+	• Start the service immediately.
+
+2. Check the status of the service
+```bash
+sudo systemctl status sertAI@$(whoami).service
+```
+- To view the file logs
+```bash
+journalctl -u sertAI@$(whoami).service -f
+```
+

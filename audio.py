@@ -115,28 +115,26 @@ def record_audio_dynamic(max_duration=10, silence_duration=1.5, fs=44100, thresh
 
 
 def listen_for_wake_word(porcupine, timeout=10):
-    # Initialize Porcupine with your chosen keyword
-    try:
-        with sd.RawInputStream(
-                samplerate=porcupine.sample_rate,
-                blocksize=porcupine.frame_length,
-                channels=1,
-                dtype="int16"
-        ) as stream:
-            print("Listening for wake word...")
-            start_time = time.time()
-            while True:
-                pcm = stream.read(porcupine.frame_length)[0]
-                pcm = np.frombuffer(pcm, dtype=np.int16)
-                if porcupine.process(pcm) >= 0:
-                    print("Wake word detected!")
-                    return True
+    with sd.RawInputStream(
+            samplerate=porcupine.sample_rate,
+            blocksize=porcupine.frame_length,
+            channels=1,
+            dtype="int16"
+    ) as stream:
+        print("Listening for wake word...")
+        start_time = time.time()
+        while True:
+            pcm = stream.read(porcupine.frame_length)[0]
+            pcm = np.frombuffer(pcm, dtype=np.int16)
+            if porcupine.process(pcm) >= 0:
+                print("Wake word detected!")
+                return True
 
-                if timeout is not None and time.time() - start_time > timeout:
-                    print("Timeout reached, stopping.")
-                    return False
-    finally:
-        porcupine.delete()
+            if timeout is not None and time.time() - start_time > timeout:
+                return False
+
+
+
 
 
 def play_audio(filename):
