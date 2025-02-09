@@ -5,10 +5,11 @@ After=network.target
 [Service]
 User=%i
 WorkingDirectory=%REPO_DIR%
-ExecStart=/usr/bin/python3 %REPO_DIR%/main.py
+ExecStart=%REPO_DIR%/sert_venv/bin/python3 %REPO_DIR%/main.py
 Restart=always
 RestartSec=5
 Environment=PYTHONUNBUFFERED=1
+Environment=XDG_RUNTIME_DIR=/run/user/1000
 
 [Install]
 WantedBy=multi-user.target
